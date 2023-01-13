@@ -23,39 +23,8 @@ Best is just to look at the sample code in route `/nav`
 6. For now, you have to make sure the `ion-backbutton` has a `default-href`, otherwise it won't show
 
 ## API info
-API for the `+layout.svelte` file:
-```
-<script lang="ts">
-	import IonTabs from './IonTabs.svelte';
+See code in `+page.svelte`. For the rest, `navController` has the same methods as `ion-nav` - https://ionicframework.com/docs/api/nav
 
-	import { videocam, pin } from 'ionicons/icons';
-	import { onMount } from 'svelte';
 
-	const myTabs = [
-		{
-			label: 'Explain',
-			icon: pin,
-			tab: 'test1'
-		},
-		{ label: 'Controllers', icon: videocam, tab: 'test2' }
-	];
-
-	const logStuff = () => {};
-</script>
-
-<IonTabs slot="bottom" tabs={myTabs} ionTabsWillChange={logStuff} ionTabsDidChange={logStuff}
-	><slot /></IonTabs
->
-```
-
-API for any `+page.svelte` file that has tab-content:
-
-```
-<ion-tab tab="test2">
-HERE YOUR CONTENT
-</ion-tab>
-```
-Make sure the ion-tab has prop `tab` pointing to the name of the route. So in this case, the route could be `whatever/whenever/tabs/test2`.
-
-## Migration from legacy
-See https://github.com/Tommertom/svelte-ionic-npm/blob/main/CHANGELOG.md#05350536
+## Todo
+Create component for `<ion-nav-link>`
