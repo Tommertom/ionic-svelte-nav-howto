@@ -1,38 +1,61 @@
-# create-svelte
+# HOW-TO Ionic Svelte - Ionic NAV
+This repo shows how to implement Ionic Nav in SvelteKit. 
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+## Why this HowTo
+Implementing Ionic Nav requires a bit of deviation from the the Ionic API docs. Not too much, but just a bit.
 
-## Creating a project
+## Stackblitz
+Want to dive into an example? Use the link below to the code-sandbox. After opening the link, please pop-up the render window to see the results.
 
-If you're seeing this, you've probably already done this step. Congrats!
+https://stackblitz.com/github/Tommertom/ionic-svelte-nav-howto
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
 
-# create a new project in my-app
-npm create svelte@latest my-app
+So, you can also clone this repo:
+`npx degit https://github.com/Tommertom/ionic-svelte-nav-howto ionic-nav`
+
+## Steps to implement 
+Best is just to look at the sample code in route `/nav`
+1. The IonNav component is configured in the `+page.svelte`
+2. That page imports from `$lib` the NavHome which does the pushing of content (overview->detail)
+3. The `NavHome` pushes child/detail views with the props using the `navController` `push` method. It can simply import the component and pass it to the `push` method
+4. If need be, you can add `props` to it, which gets passed to the component
+5. The child/detail page can implement a `ion-backbutton` for popping the view using the default animation
+6. For now, you have to make sure the `ion-backbutton` has a `default-href`, otherwise it won't show
+
+## API info
+API for the `+layout.svelte` file:
+```
+<script lang="ts">
+	import IonTabs from './IonTabs.svelte';
+
+	import { videocam, pin } from 'ionicons/icons';
+	import { onMount } from 'svelte';
+
+	const myTabs = [
+		{
+			label: 'Explain',
+			icon: pin,
+			tab: 'test1'
+		},
+		{ label: 'Controllers', icon: videocam, tab: 'test2' }
+	];
+
+	const logStuff = () => {};
+</script>
+
+<IonTabs slot="bottom" tabs={myTabs} ionTabsWillChange={logStuff} ionTabsDidChange={logStuff}
+	><slot /></IonTabs
+>
 ```
 
-## Developing
+API for any `+page.svelte` file that has tab-content:
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
+<ion-tab tab="test2">
+HERE YOUR CONTENT
+</ion-tab>
 ```
+Make sure the ion-tab has prop `tab` pointing to the name of the route. So in this case, the route could be `whatever/whenever/tabs/test2`.
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+## Migration from legacy
+See https://github.com/Tommertom/svelte-ionic-npm/blob/main/CHANGELOG.md#05350536
